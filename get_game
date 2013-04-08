@@ -1,0 +1,28 @@
+#!/bin/bash
+
+
+## grabsite by $1 specified
+
+USER_AGENT="Mozilla/5.0 (Windows; U; MSIE 9.0; Windows NT 9.0; en-US)"
+SAVE_HOST="$1"
+WARC_NAME="$2"
+
+echo ""
+echo "---------- INFO -----------"
+echo ""
+echo "USER_AGENT is " $USER_AGENT
+echo "SAVE_HOST is " $SAVE_HOST
+echo "WARC_NAME is " $WARC_NAME
+echo ""
+echo "----------- GRABBING ---------"
+echo ""
+
+wget -e robots=off --mirror --page-requisites \
+--waitretry 5 --timeout 60 --tries 5 --wait 2 \
+--warc-header "operator: Archive Team" --warc-cdx --warc-file="$WARC_NAME" \
+-U "$USER_AGENT" "$SAVE_HOST" \
+--span-hosts --domains=$SAVE_HOST,pcmedia.gamespy.com,pnmedia.gamespy.com,pspmedia.gamespy.com,oystatic.ignimgs.com
+
+echo ""
+echo "---- GRAB FINISHED ----"
+echo ""
