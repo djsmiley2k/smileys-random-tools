@@ -1,0 +1,10 @@
+#!/bin/bash
+
+## htaccess file creator.
+##
+## Simply create ./usersandpasses file with username and passwords space seperated
+
+while IFS=: read username password
+do
+	htpasswd -d -b ./.htaccess $username $password
+done < ./usersandpasses

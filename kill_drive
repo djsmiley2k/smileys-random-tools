@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Pass drive (/dev/sdx) as $1 to be wiped
+# Prints xmessage once finished
+
+
+echo 'You wish to kill '$1'. Are you sure? (y/n)'
+read consent
+if [ $consent != "y" ]; then
+echo 'Quitting'
+exit
+fi
+sudo shred -v /dev/$1; xmessage -nearmouse Finished killing $1 &
+exit
+
