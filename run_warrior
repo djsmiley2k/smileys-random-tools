@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+
+#
+# Script by Tim Bowers
+#
+
+#
+# Script will start/stop/save a VM state for virtualbox
+#
+# accepts arguments of start / stop / reset
+#
+
+#
+# Depends on VirtualBox being installed with headless support enabled
+#
+
+#
+# Version 0.01
+# 17/06/2013
+#
+
+
