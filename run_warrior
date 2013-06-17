@@ -21,3 +21,14 @@
 #
 
 
+if $1 == start then
+	start vm
+else if $1 == stop then
+	stop vm
+else if $1 == reset then
+	reset vm
+else
+	show instructions
+endif
+
+
