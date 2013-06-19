@@ -1,0 +1,25 @@
+
+#!/bin/bash
+
+# Smiley strikes again with another scary script
+#
+# Script designed to use the pages of xanga groups to return xanga webpages; then grep those pages for usernames contained within the xanga url (the username in the url maybe different to
+# the username as printed on the site
+#
+# grep, awk and wget#
+#
+# 0.0.1
+#
+# 19/06/2013 (Happy Birthday tomorrow Amy!)
+
+for y in {2..1271529} # highest ID found via searching the site manually
+	do wget -a wget.log -O test "http://www.xanga.com/groups/subdir.aspx?id=$y&uni-72-pg=1";  # Grab first page
+	max_pages=$(grep "pagenav-next" -B 1 ./test | awk -F= '{print $5}' | awk -F\> '{print $1}' | awk -F\" '{ print $1}' | head -n 1);
+	sleep 1
+	echo "Got value for group $y"
+	for x in {1..$max_pages}; 
+		echo "grabbing pages 1 - $max_pages"
+		do wget -v --directory-prefix=_$x -a wget.log "http://www.xanga.com/groups/subdir.aspx?id=$(y)&uni-72-pg=$x"; 
+		sleep 2;
+	done
+done
