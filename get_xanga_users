@@ -11,7 +11,7 @@
 #
 # 19/06/2013 (Happy Birthday tomorrow Amy!)
 
-for y in {2..1271529}; # highest ID found via searching the site manually
+for y in {2..1271529}; # highest ID found via searching the site manually - IF HELPING SET VALUES HERE
 	do wget -a wget.log -O test "http://www.xanga.com/groups/subdir.aspx?id=$y&uni-72-pg=1";  # Grab first page
 	max_pages=$(grep "pagenav-next" -B 1 ./test | awk -F= '{print $5}' | awk -F\> '{print $1}' | awk -F\" '{ print $1}' | head -n 1);
 	sleep 1;
