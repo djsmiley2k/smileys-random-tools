@@ -7,20 +7,19 @@
 #
 # grep, awk and wget#
 #
-# 0.1.0
+# 0.1.3
 #
-# 19/06/2013 (Happy Birthday tomorrow Amy!)
+# 21/06/2013 
 
-for y in {2..1271529}; # highest ID found via searching the site manually - IF HELPING SET VALUES HERE
+for y in $(eval echo "{$1..$2}"); # highest ID found via searching the site manually - IF HELPING SET VALUES HERE
 	do wget -a wget.log -O test "http://www.xanga.com/groups/subdir.aspx?id=$y&uni-72-pg=1";  # Grab first page
 	max_pages=$(grep "pagenav-next" -B 1 ./test | awk -F= '{print $5}' | awk -F\> '{print $1}' | awk -F\" '{ print $1}' | head -n 1);
-	sleep 1;
 	echo "Got value for group $y; Max pages = $max_pages";
 	for x in $(eval echo "{1..$max_pages}")			## So bash is broken! Who knew! (can't use: {1..$max_pages}; ) 
 		do echo "grabbing pages 1 - $max_pages";
 		echo "Grabbing page $x";
 		wget -v --directory-prefix=_$y -a wget.log "http://www.xanga.com/groups/subdir.aspx?id=$y&uni-72-pg=$x"; 
-		sleep 2;
+		sleep 1;
 	done;
 done
 
