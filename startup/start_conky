@@ -1,0 +1,18 @@
+#!/bin/bash
+export DISPLAY=":0.0"
+
+today=$(date)
+
+if pidof conky; then
+echo "Conky running, killing now"
+/usr/bin/killall conky
+sleep 3
+echo "Restarting conky - $today"
+echo "Restarting conky @ $today" >> /var/log/conky.log 
+/usr/bin/conky -c /home/tim/.conkyrc >>/var/log/conky.log 2>&1 &
+else
+sleep 15
+echo "starting conky... @ $today"
+echo "starting conky... @ $today" >> /var/log/conky.log
+/usr/bin/conky -c /home/tim/.conkyrc >>/var/log/conky.log 2>&1 &
+fi
