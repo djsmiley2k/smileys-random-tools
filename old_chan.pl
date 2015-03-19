@@ -17,7 +17,7 @@ my $old_chan = Irssi::active_win();
 sub push_old {
 	# Push $curr_chan to $old_chan
 	Irssi::command("/Window hide " . $old_chan);
-	my $old_chan = $curr_chan;
+	$old_chan = $curr_chan;
 }
 
 sub make_win {
