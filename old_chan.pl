@@ -11,22 +11,23 @@ use Irssi;
 	license => 'GPL2',
 );
 
-
+# Let's put the variables outside the scope of the subs, so that they behave a little more like globals.
+my ($old_chan,$curr_chan,$new_win);
 
 sub push_old {
 	# Push $curr_chan to $old_chan
-	my $old_chan = $curr_chan
+	$old_chan = $curr_chan
 }
 
 sub make_win {
 	# Make new window using $old_chan
 	# /window show $old_chan
-	my $new_win = Irssi::command("/WINDOW split" $old_chan"");
+	$new_win = Irssi::command("/WINDOW split" $old_chan"");
 }
 
 sub store_new {
 	# store new channel name in $curr_chan
-	my $curr_chan = Irssi::active_win()
+	$curr_chan = Irssi::active_win()
 }
 
 
