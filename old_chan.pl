@@ -23,7 +23,7 @@ sub push_old {
 sub make_win {
 	# Make new window using $old_chan
 	# /window show $old_chan
-	Irssi::command("/WINDOW split " . $old_chan);
+	Irssi::command("/WINDOW show " . $old_chan);
 }
 
 sub store_new {
@@ -32,8 +32,8 @@ sub store_new {
 	
 }
 
-Irssi::signal_add_first( 'window item changed', \&push_old);
-Irssi::signal_add_last( 'window item changed', \&make_win);
-Irssi::signal_add_last( 'window item changed', \&store_new);
+Irssi::signal_add_first( 'window changed', \&push_old);
+Irssi::signal_add_last( 'window changed', \&make_win);
+Irssi::signal_add_last( 'window changed', \&store_new);
 
 
