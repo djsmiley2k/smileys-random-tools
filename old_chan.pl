@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use Irssi;
-my %VERSION = ("0.3");
+my %VERSION = ("0.4");
 my %IRSSI = (
 	authors => 'djsmiley2k',
 	contact => 'djsmiley2k@gmail.com',
@@ -12,17 +12,21 @@ my %IRSSI = (
 );
 
 my ($curr_chan, $old_chan);
+$curr_chan = Irssi::active_win();  ## initalise the window
+
 
 sub push_old {
 	# Push $curr_chan to $old_chan
-	Irssi::command("/Window hide " . $old_chan);
+	if (defined $old_chan) {
+	Irssi::command("/window hide " . $old_chan);
+	}
 	$old_chan = $curr_chan;
 }
 
 sub make_win {
 	# Make new window using $old_chan
 	# /window show $old_chan
-	Irssi::command("/WINDOW show " . $old_chan);
+	Irssi::command("/window show " . $old_chan);
 }
 
 sub store_new {
