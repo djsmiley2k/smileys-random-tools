@@ -11,8 +11,7 @@ my %IRSSI = (
 	license => 'GPL2',
 );
 
-my $curr_chan = Irssi::active_win();
-my $old_chan = Irssi::active_win();
+my ($curr_chan, $old_chan);
 
 sub push_old {
 	# Push $curr_chan to $old_chan
