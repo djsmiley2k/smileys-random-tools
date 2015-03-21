@@ -12,7 +12,7 @@ my %IRSSI = (
 );
 
 my ($curr_chan, $old_chan);
-store_new
+$curr_chan = Irssi::active_win->{refnum};
 
 sub push_old {
 	# Push $curr_chan to $old_chan
