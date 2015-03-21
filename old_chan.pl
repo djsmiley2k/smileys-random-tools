@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use Irssi;
-my %VERSION = ("0.4");
+my $VERSION = ("0.5");
 my %IRSSI = (
 	authors => 'djsmiley2k',
 	contact => 'djsmiley2k@gmail.com',
@@ -12,8 +12,7 @@ my %IRSSI = (
 );
 
 my ($curr_chan, $old_chan);
-$curr_chan = Irssi::active_win();  ## initalise the window
-
+store_new
 
 sub push_old {
 	# Push $curr_chan to $old_chan
@@ -31,7 +30,7 @@ sub make_win {
 
 sub store_new {
 	# store new channel name in $curr_chan
-	$curr_chan = Irssi::active_win();
+	$curr_chan = Irssi::active_win->{refnum};
 	
 }
 
