@@ -13,29 +13,32 @@ my %IRSSI = (
 
 my ($curr_chan, $old_chan);
 $curr_chan = Irssi::active_win->{refnum};
+$old_chan = Irssi::active_win->{refnum};
 
 sub push_old {
-	# Push $curr_chan to $old_chan
-	if (defined $old_chan) {
+	# Close the old excess window; Push $curr_chan to $old_chan
+	if ($old_chan != Irssi::active_win->{refnum}) {
 	Irssi::command("/window hide " . $old_chan);
-	}
+	print "closing old channel";
 	$old_chan = $curr_chan;
+	print "old chan is $old_chan and curr_chan is $curr_chan";
+	} else {
+	print "no old channel found";
+	$old_chan = $curr_chan;
+	}
 }
 
 sub make_win {
 	# Make new window using $old_chan
 	# /window show $old_chan
+	print "opening old channel in new window";
 	Irssi::command("/window show " . $old_chan);
-}
-
-sub store_new {
-	# store new channel name in $curr_chan
 	$curr_chan = Irssi::active_win->{refnum};
-	
 }
 
 Irssi::signal_add_first( 'window changed', \&push_old);
 Irssi::signal_add_last( 'window changed', \&make_win);
-Irssi::signal_add_last( 'window changed', \&store_new);
+
+### Irssi::signal_add_last( 'window changed', \&store_new);
 
 
