@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use Irssi;
-my $VERSION = ("0.5");
+my $VERSION = ("0.51");
 my %IRSSI = (
 	authors => 'djsmiley2k',
 	contact => 'djsmiley2k@gmail.com',
@@ -25,6 +25,7 @@ sub push_old {
 	} else {
 	print "no old channel found";
 	$old_chan = $curr_chan;
+	$curr_chan = Irssi::active_win->{refnum};
 	}
 }
 
@@ -33,11 +34,10 @@ sub make_win {
 	# /window show $old_chan
 	print "opening old channel in new window";
 	Irssi::command("/window show " . $old_chan);
-	$curr_chan = Irssi::active_win->{refnum};
 }
 
-Irssi::signal_add_first( 'window changed', \&push_old);
-Irssi::signal_add_last( 'window changed', \&make_win);
+Irssi::signal_add_first( 'window changed', \&make_win);
+Irssi::signal_add_last( 'window changed', \&push_old);
 
 ### Irssi::signal_add_last( 'window changed', \&store_new);
 
