@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use Irssi;
-my $VERSION = ("0.51");
+my $VERSION = ("0.55");
 my %IRSSI = (
 	authors => 'djsmiley2k',
 	contact => 'djsmiley2k@gmail.com',
@@ -11,29 +11,28 @@ my %IRSSI = (
 	license => 'GPL2',
 );
 
-my ($curr_chan, $old_chan);
+my ($curr_chan, $old_chan, $old_old_chan);
 $curr_chan = Irssi::active_win->{refnum};
-$old_chan = Irssi::active_win->{refnum};
-
-sub push_old {
-	# Close the old excess window; Push $curr_chan to $old_chan
-	if ($old_chan != Irssi::active_win->{refnum}) {
-	Irssi::command("/window hide " . $old_chan);
-	print "old chan is $old_chan and curr_chan is $curr_chan; closing old chan";
-	$old_chan = $curr_chan;
-	} else {
-	print "no old channel found; old_chan is $old_chan and curr_chan is $curr_chan";
-	$old_chan = $curr_chan;
-	$curr_chan = Irssi::active_win->{refnum};
-	}
-}
+$old_old_chan = -1;
 
 sub make_win {
-	# Make new window using $old_chan
-	# /window show $old_chan
-	$old_chan = Irssi::active_win->{refnum};
-	print "opening old channel in new window";
-	Irssi::command("/window show " . $old_chan);
+        # Make new window using $old_chan
+        # /window show $old_chan
+        $old_chan = Irssi::active_win->{refnum};
+	print "stored old chan value ($old_chan)";
+}
+
+sub push_old {
+	$curr_chan = Irssi::active_win->{refnum};
+	if ($old_old_chan != -1) {
+		Irssi::command("/window show " . $old_chan);
+		Irssi::command("/window hide " . $old_old_chan);
+		print "old chan = $old_chan; curr_chan = $curr_chan; closing old_old_chan ($old_old_chan)";
+	} else {
+                Irssi::command("window show " . $old_chan);
+		print "Nothing to close; old_chan = $old_chan; curr_chan = $curr_chan; old_old_chan = $old_old_chan";
+		}
+	$old_old_chan = $old_chan
 }
 
 Irssi::signal_add_first( 'window changed', \&make_win);
