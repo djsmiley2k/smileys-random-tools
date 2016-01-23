@@ -39,5 +39,3 @@ Irssi::signal_add_first( 'window changed', \&make_win);
 Irssi::signal_add_last( 'window changed', \&push_old);
 
 ### Irssi::signal_add_last( 'window changed', \&store_new);
-
-
