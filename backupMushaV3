@@ -1,5 +1,5 @@
 #!/bin/bash
 
 echo 'Starting backup'
-/home/tim/bin/goLibs/rclone --config /home/tim/.rclone.conf sync /backups/MushaV3/daily.0/daily/ GDrive:backup || echo 'Backup failed' && die
+/home/tim/bin/goLibs/rclone $1 --config /home/tim/.rclone.conf sync /backups/MushaV3/daily.0/daily/ GDrive:backup || echo 'Backup failed' && die
 
