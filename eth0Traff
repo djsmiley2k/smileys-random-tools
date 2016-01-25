@@ -1,0 +1,21 @@
+#!/bin/bash
+IF=eth0
+if [ -z "$IF" ]; then
+        IF=`ls -1 /sys/class/net/ | head -1`
+fi
+RXPREV=-1
+TXPREV=-1
+SEC=3
+echo "Listening $IF..."
+while [ 1 == 1 ] ; do
+        RX=`cat /sys/class/net/${IF}/statistics/rx_bytes`
+        TX=`cat /sys/class/net/${IF}/statistics/tx_bytes`
+        if [ $RXPREV -ne -1 ] ; then
+                let BWRX=($RX-$RXPREV)/$SEC
+                let BWTX=($TX-$TXPREV)/$SEC
+                echo "Received: $BWRX B/s    Sent: $BWTX B/s"
+        fi
+        RXPREV=$RX
+        TXPREV=$TX
+        sleep $SEC
+done
