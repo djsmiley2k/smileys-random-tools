@@ -1,11 +1,25 @@
 #!/bin/bash
+writeOut(){
+        local file="/backups/router/traffic"
+
+        if [ ! -f "$file" ] ; then
+                touch "$file"
+        fi
+
+        echo "$1" > $file
+}
+
+
+
+
+
 IF=eth0
 if [ -z "$IF" ]; then
         IF=`ls -1 /sys/class/net/ | head -1`
 fi
 RXPREV=-1
 TXPREV=-1
-SEC=3
+SEC=10
 echo "Listening $IF..."
 while [ 1 == 1 ] ; do
         RX=`cat /sys/class/net/${IF}/statistics/rx_bytes`
@@ -13,9 +27,10 @@ while [ 1 == 1 ] ; do
         if [ $RXPREV -ne -1 ] ; then
                 let BWRX=($RX-$RXPREV)/$SEC
                 let BWTX=($TX-$TXPREV)/$SEC
-                echo "Received: $BWRX B/s    Sent: $BWTX B/s"
+                writeOut "$BWRX $BWTX"
         fi
         RXPREV=$RX
         TXPREV=$TX
         sleep $SEC
 done
+
