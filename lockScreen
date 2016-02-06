@@ -1,0 +1,19 @@
+#!/bin/bash
+# Lock screen but do some other bits too
+/usr/bin/xscreensaver-command -lock
+
+# Disconnect IRSSI session from server
+/usr/bin/ssh -i /home/tim/.ssh/id_rsa tim@192.168.1.10 -p 1985 "/usr/bin/screen -d irssi"
+
+# Dim keyboard
+/usr/bin/killall ckb
+echo "rgb 000000" > /dev/input/ckb1/cmd
+
+# watch for xscreensaver unlocking
+xscreensaver-command -watch | while read -r l;
+	do
+		if [[ $l = UNBLANK* ]];
+			then /usr/bin/ckb --background &;
+			break;
+		fi;
+	done
