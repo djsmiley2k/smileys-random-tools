@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # Lock screen but do some other bits too
 /usr/bin/xscreensaver-command -lock
 
@@ -11,11 +12,14 @@
 echo "rgb 000000" > /dev/input/ckb1/cmd
 
 # watch for xscreensaver unlocking
-xscreensaver-command -watch | while read;
-	do
-		if [[ $REPLY = UNBLANK* ]];
-		then
-			/usr/bin/ckb --background &
+xscreensaver-command -watch | while read; do
+		if [[ $REPLY = UNBLANK* ]]; then
+			/usr/bin/ckb --background 2>&1 > /dev/null &
+			disown ckb
+
+			# WE CAN'T GET OUT!
+			/usr/bin/killall xscreensaver-command
+
 			break
 		fi
 		# echo $REPLY
