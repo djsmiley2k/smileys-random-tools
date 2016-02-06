@@ -1,0 +1,16 @@
+#!/sbin/runscript
+  
+depend() {
+  need net
+}
+  
+start() {
+  ebegin "Starting network traffic logger"
+  start-stop-daemon --start -b --exec /root/bin/eth0Traff --make-pidfile --pidfile /tmp/.traffic
+  eend $?
+}
+  
+stop() {
+  ebegin "Stopping network traffic logger"
+  start-stop-daemon --stop --pidfile /tmp/.traffic 
+}
