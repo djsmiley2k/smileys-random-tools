@@ -2,9 +2,8 @@
 
 import sys
 import imaplib
-import getpass
 import email
-import datetime
+import pathlib
 
 # Define those functions first
 
@@ -24,9 +23,27 @@ def count_mails(server):
 # End of def
 
 
+
+
 username = sys.argv[1]
 password = sys.argv[2]
 
+firstRun = 1
+
+#try:
+#	f = open('/var/tmp/fishtank','r')
+#	counter = f.read()
+#	f.close()
+#except:
+
+
+counter = 0 ## Presume we have no value
+
+if path.is_file('/var/tmp/fishtank'):
+	with open("/var/tmp/fishtank") as file:
+		counter = file.read()
+
+## Where are we connerting to?
 server = imaplib.IMAP4_SSL('imap.gmail.com')
 
 try:
@@ -39,11 +56,24 @@ except imaplib.IMAP4.error:
 
 rv, data = server.select("INBOX")
 if rv == 'OK':
+	if firstRun == 1:
+		firstrun = 0
+		counter = count_mails(server)
+
 	count = count_mails(server)
 	server.close()
-	try:
-		print("Number of emails in inbox: %i" %count)
-	except:
-		print("failed to get number of emails")
 
+	if count > counter
+		print("Number of emails in inbox: %i - more than previously" %count)
+	else:
+		print("Number of emails in inbox: %i - less than previously" %count)
+
+	# Write out counter value
+	try:
+		f = open('/var/tmp/fishtank','w')
+		f.write(counter)
+		f.close()
+	except:
+		print("Failed to write to /var/tmp/fishtank - check permissions")
 server.logout()
+
