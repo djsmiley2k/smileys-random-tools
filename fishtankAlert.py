@@ -15,11 +15,10 @@ def count_mails(server):
 		return
 
 	#data contains all the mail id's -- count them
-	for mail in data:
-		mails = str(mail, encoding='UTF-8') # decode from bstring
-		total = mails.split()		# split into list based on spaces
-		numOfMails = len(total)
-		return numOfMails
+	mails = str(data[0], encoding='UTF-8') # decode from bstring
+	total = mails.split()		# split into list based on spaces
+	numOfMails = len(total)
+	return numOfMails
 # End of def
 
 ## Body here
