@@ -3,7 +3,7 @@
 import sys
 import imaplib
 import email
-import pathlib
+import os
 
 # Define those functions first
 
@@ -29,7 +29,7 @@ if __name__ == '__main__':
 	username = sys.argv[1]
 	password = sys.argv[2]
 
-	firstRun = 1
+	firstRun = True
 
 	#try:
 	#	f = open('/var/tmp/fishtank','r')
@@ -40,9 +40,14 @@ if __name__ == '__main__':
 
 	counter = 0 ## Presume we have no value
 
-	if path.is_file('/var/tmp/fishtank'):
-		with open("/var/tmp/fishtank") as file:
-			counter = file.read()
+	if os.path.isfile('/var/tmp/fishtank'):
+		print('File found at /var/tmp/fishtank')
+		with open("/var/tmp/fishtank",'r') as file:
+			counter = int(file.read())
+			firstRun = False
+	else:
+		print('File not found at /var/tmp/fishtank')
+
 
 	## Where are we connerting to?
 	server = imaplib.IMAP4_SSL('imap.gmail.com')
@@ -57,22 +62,24 @@ if __name__ == '__main__':
 
 	rv, data = server.select("INBOX")
 	if rv == 'OK':
-		if firstRun == 1:
-			firstrun = 0
+		if firstRun == True:
+			firstrun = False
 			counter = count_mails(server)
 
 		count = count_mails(server)
 		server.close()
 
-		if count > counter
+		if count > counter:
 			print("Number of emails in inbox: %i - more than previously" %count)
+		elif count == counter:
+			print("Same number of emails in inbox: %i" %count)
 		else:
 			print("Number of emails in inbox: %i - less than previously" %count)
 
 		# Write out counter value
-		if path.is_file('/var/tmp/fishtank'):
-        		with open("/var/tmp/fishtank") as file:
-                		file.write(counter)
+		if os.path.isfile('/var/tmp/fishtank'):
+			with open("/var/tmp/fishtank", 'w') as file:
+				file.write(str(count))
 
 		#try:
 		#	f = open('/var/tmp/fishtank','w')
