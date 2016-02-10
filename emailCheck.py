@@ -25,17 +25,17 @@ def count_mails(server):
 
 if __name__ == '__main__':
 
-	username = sys.argv[1]
-	password = sys.argv[2]
+	home = os.path.expanduser('~')
+	path = home + '/.gpass'
+	if os.path.isfile(path):
+		with open(path,'r') as file:
+			lines=file.readlines()
+			username = lines[0]
+			password = lines[1]
+	else:
+		print("~/.gpass not found - please add username and password to file on seperate lines")
 
 	firstRun = True
-
-	#try:
-	#	f = open('/var/tmp/fishtank','r')
-	#	counter = f.read()
-	#	f.close()
-	#except:
-
 
 	counter = 0 ## Presume we have no value
 
