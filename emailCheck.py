@@ -28,6 +28,7 @@ if __name__ == '__main__':
 
 	parser = argparse.ArgumentParser(description='Checks change in number of emails within a mailbox.')
 	parser.add_argument('-q','--quiet', help='Only outputs up/down/same', action='store_true')
+	parser.add_argument('-m','--mailbox', help='Choose a folder other than inbox', default='INBOX')
 	args = parser.parse_args()
 
 	home = os.path.expanduser('~')
@@ -65,7 +66,7 @@ if __name__ == '__main__':
 
 	# rv is response code (expect OK), data is returned data
 
-	rv, data = server.select("INBOX")
+	rv, data = server.select(args.mailbox)
 	if rv == 'OK':
 		if firstRun == True:
 			firstrun = False
