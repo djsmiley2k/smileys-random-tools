@@ -1,0 +1,7 @@
+#!/bin/bash
+
+###########
+# Fix lack of borders on windows
+##########
+
+/usr/bin/xfwm4 &
