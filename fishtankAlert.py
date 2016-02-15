@@ -55,7 +55,7 @@ if __name__ == '__main__':
 		server.login(username,password)
 	except imaplib.IMAP4.error:
 		print("Login Failed!")
-		exit
+		exit()
 
 	# rv is response code (expect OK), data is returned data
 
