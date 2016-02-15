@@ -47,7 +47,8 @@ if __name__ == '__main__':
 	counter = 0 ## Presume we have no value
 
 	if os.path.isfile('/var/tmp/fishtank'):
-		print('File found at /var/tmp/fishtank')
+		if args.quiet != True:
+			print('File found at /var/tmp/fishtank')
 		with open("/var/tmp/fishtank",'r') as file:
 			counter = int(file.read())
 			firstRun = False

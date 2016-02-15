@@ -35,6 +35,11 @@ if __name__ == '__main__':
 	green = [0,255,0]
 	blue = [0,0,255]
 
-	response = subprocess.call("./emailCheck.py", "-q")
-	if response == 'up':
+	#response = subprocess.call(["./emailCheck.py", "-q"])
+	response = subprocess.check_output(['./emailCheck.py', '-q'])
+	print(response)
+	if response == "b'up\n'":
+		print("flashing lights!")
 		flash_lights('192.168.1.47', '19444', '{"color":[0,255,0],"command":"color","priority":1}')
+	else:
+		print("no flashing here :( ")
