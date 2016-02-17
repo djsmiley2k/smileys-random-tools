@@ -18,8 +18,10 @@ def flash_lights(server, port, msg):
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 	sock.connect( (server, port) )
-	while x > 3:
+	while x < 3:
 		sock.sendall(msg)
+		#result = sock.recv(4096)
+		#print(result)
 		time.sleep(0.5)
 		blank = '{"color":[0,0,0],"command":"color","priority":1}' # Black
 		sock.sendall(blank.encode('utf8'))
