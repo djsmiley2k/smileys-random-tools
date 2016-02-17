@@ -18,17 +18,18 @@ def flash_lights(server, port, msg):
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 	sock.connect( (server, port) )
-	while x < 3:
-		sock.sendall(msg)
+	while x < 5:
 		#result = sock.recv(4096)
+		sock.sendall(msg)
 		#print(result)
-		time.sleep(0.5)
-		blank = '{"color":[0,0,0],"command":"color","priority":1}' # Black
+		time.sleep(0.8)
+		blank = '{"color":[0,0,0],"command":"color","priority":1}\n' # Black
 		sock.sendall(blank.encode('utf8'))
-		time.sleep(0.2)
+		time.sleep(0.3)
 		x += 1
 	# Reset to previous state
-	clear = '{"command":"clear","priority":1}'
+	time.sleep(0.5)
+	clear = '{"command":"clear","priority":1}\n'
 	sock.sendall(clear.encode('utf8'))
 
 # Main function
@@ -42,8 +43,5 @@ if __name__ == '__main__':
 	#response = subprocess.call(["./emailCheck.py", "-q"])
 	response = subprocess.check_output(['./emailCheck.py', '-q'])
 	if response == b'up\n':
-		print("flashing lights!")
-		message = '{"color":[0,255,0],"command":"color","priority":1}'
+		message = '{"color":[0,255,0],"command":"color","priority":1}\n'
 		flash_lights('192.168.1.47', 19444, message.encode('utf8'))
-	else:
-		print("no flashing here :( ")
