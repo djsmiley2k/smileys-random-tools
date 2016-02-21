@@ -16,16 +16,16 @@ $downValues[] = '';
 
 
 if($history) {
-	$x = 0;
-	while ($x < 5) { // 0 - 4
-		$upValues[$x] = $history[$x];
-		$x++;
-	}
+        $x = 0;
+        while ($x < 5) { // 0 - 4
+                $upValues[$x] = $history[$x];
+                $x++;
+        }
 
-	while ($x < 10) { // 5 - 9
-		$downValues[($x -5)] =  $history[$x];
-		$x++;
-	}
+        while ($x < 10) { // 5 - 9
+                $downValues[($x -5)] =  $history[$x];
+                $x++;
+        }
 }
 
 var_dump($history);
@@ -35,8 +35,12 @@ echo '<hr>';
 
 if ($traffic) {
 	$readValues = array_filter(explode(PHP_EOL, $traffic));
-	array_unshift($upValues, $readValues[1]);
-	array_unshift($downValues, $readValues[0]);
+	if ($readValues[1] != $upValues[0]) {
+		array_unshift($upValues, $readValues[1]);
+	}
+	if ($readValues[0] != $downValues[0]) {
+		array_unshift($downValues, $readValues[0]);
+	}
 	$upValues = array_slice($upValues,0,5);
 	$downValues = array_slice($downValues,0,5);
 	echo '<br> upValues: ';
