@@ -1,0 +1,5 @@
+#!/bin/bash
+
+## Move torrent to specified location
+
+/bin/mv "$1" /home/tim/server/torrents/
