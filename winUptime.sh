@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Shamelessly borrowed from http://correctlife.blogspot.de/2011/02/wrapper-on-checkntuptime.html
+
 HOSTADDRESS=$1
 MAXWARN=$2 # in hours
 MAXCRIT=$3 # in hours
