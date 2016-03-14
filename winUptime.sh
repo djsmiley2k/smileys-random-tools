@@ -11,7 +11,7 @@ STATE_WARNING=1
 STATE_CRITICAL=2
 STATE_UNKNOWN=3
 
-SECONDS=`/usr/local/nagios/libexec/check_nt -H $HOSTADDRESS -p 12489 -s rq06n4UBLJ59FW$
+SECONDS=`/usr/local/nagios/libexec/check_nt -H $HOSTADDRESS -p 12489 -s $ekR3t $2 $3`
 #### IS:           6817
 #### SHOULD BE:    WARNING: uptime: 1:53 < warning|'uptime'=6817000;172800000;3600000;
 
