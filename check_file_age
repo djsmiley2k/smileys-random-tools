@@ -1,0 +1,109 @@
+#!/bin/bash
+#----------------------------------------
+# File Present Check plugin for Nagios
+#
+#----------------------------------------
+# Plugin variable description
+
+PROGNAME=$(basename $0) 
+RELEASE="Version 1.0" 
+AUTHOR="Tim Bowers"
+
+STATE_OK=0
+STATE_WARNING=1
+STATE_CRITICAL=2
+STATE_UNKNOWN=3
+
+# Functions plugin usage
+
+print_release() {
+    echo "$RELEASE $AUTHOR"
+	exit 0
+}
+
+print_usage() {
+	echo ""
+	echo "$PROGNAME $RELEASE - Check age of files in a directory, alerting if over a certain value"
+	echo ""
+	echo "Usage: check_file.sh"
+	echo ""
+	echo " -h Show help page"
+	echo " -w Warning age in minutes (minimum 1 minute)"
+	echo " -c Critical age in minutes (minimum 1 minute)"
+	echo ""
+    echo "Usage: $PROGNAME"
+    echo "Usage: $PROGNAME --help"
+    echo ""
+}
+
+print_help() {
+	print_usage
+        echo ""
+        print_release $PROGNAME $RELEASE
+        echo ""
+        echo "This plugin will check if a file is present or missing in a given directory"
+	echo "-h is for opening this help list"
+        echo ""
+}
+
+# Make sure the correct number of command line arguments have been 
+# supplied
+if [ $# -lt 1 ]; then
+    print_usage
+    exit $STATE_UNKNOWN 
+fi 
+
+while [ $# -gt 1 ]; do
+	case "$1" in
+        -h | --help)
+            print_help
+            exit $STATE_OK
+            ;;
+        -v | --version)
+                print_release
+                exit $STATE_OK
+                ;;
+	-w)	WARNINGVAL="$2"
+		shift
+		;;
+	-c)	CRITICALVAL="$2"
+		shift
+		;;
+	-d)	DIR="$2"
+		shift
+		;;
+	*) 	echo "Unknown argument: $1"
+        	print_usage
+        	exit $STATE_UNKNOWN
+        	;;
+	esac 
+shift
+done 
+
+## List files in ${DIR}
+
+## Remove -maxdepth 1 to search subdir's as well
+FILES_CRIT=($(find "${DIR}" -maxdepth 1 -type f -mmin +${CRITICALVAL}))
+FILES_WARN=($(find "${DIR}" -maxdepth 1 -type f -mmin +${WARNINGVAL}))
+
+#echo ${FILES_CRIT}
+
+#echo ${CRITICALVAL}
+
+if [ ! -z "$FILES_CRIT" ]; then
+	# $FILES_CRIT is defined
+	echo "CRIT: Files older than ${CRITICALVAL} minutes found!"
+	exit $STATE_CRITICAL
+else
+	# $FILES_CRIT is not defined; Check $FILES_WARN
+	if [ ! -z "$FILES_WARN" ]; then
+		echo "WARN: Files older than ${WARNINGVAL} minutes found!"
+		exit $STATE_WARNING
+	fi
+	
+	echo "No outdated files found"
+	exit $STATUS_OK
+fi
+
+echo "Unknown error"
+exit $STATE_UNKNOWN
