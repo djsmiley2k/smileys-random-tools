@@ -9,5 +9,6 @@ rm /backups/MushaV3/MushaV3weekly.tar.gz
 tar -czf /backups/MushaV3/MushaV3weekly.tar.gz /backups/MushaV3/weekly.0
 
 # Sync backup to server
+scp -CP 1984 -i /home/root/.ssh/id_SoYouStart /backups/MushaV3/MushaV3weekly.tar.gz smiley@server.milkme.co.uk:/home/smiley/backups/
 
 # Sync backup to GDrive
