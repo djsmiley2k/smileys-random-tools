@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo 'Compressing weekly backup image'
+
+## Backups should be at /backups/<hostname>/
+rm /backups/MushaV3/MushaV3weekly.tar.gz
+
+# Create backup
+tar -czf /backups/MushaV3/MushaV3weekly.tar.gz /backups/MushaV3/weekly.0
+
+# Sync backup to server
+
+# Sync backup to GDrive
