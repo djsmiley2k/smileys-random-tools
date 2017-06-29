@@ -12,3 +12,4 @@ tar -czf /backups/MushaV3/MushaV3weekly.tar.gz /backups/MushaV3/weekly.0 /backup
 scp -l 1500 -CP 1984 -i /home/tim/.ssh/id_SoYouStart /backups/MushaV3/MushaV3weekly.tar.gz smiley@server.milkme.co.uk:/home/smiley/backups/
 
 # Sync backup to GDrive
+/home/tim/bin/goLibs/rclone --transfers 8 --retries 99 --modify-window 5s --drive-upload-cutoff 5M -c --config /home/tim/.rclone.conf sync /backups/MushaV3/MushaV3Weekly.tar.gz  GDrive:backup/weekly
