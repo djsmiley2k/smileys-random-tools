@@ -9,7 +9,7 @@ rm -f /backups/MushaV3/MushaV3weekly.tar.gz
 tar -czf /backups/MushaV3/MushaV3weekly.tar.gz /backups/MushaV3/weekly.0 /backups/MushaV3/daily.0
 
 # Sync backup to server
-scp -l 1500 -CP 1984 -i /home/tim/.ssh/id_SoYouStart /backups/MushaV3/MushaV3weekly.tar.gz smiley@server.milkme.co.uk:/home/smiley/backups/
+scp -l 3000 -CP 1984 -i /home/tim/.ssh/id_SoYouStart /backups/MushaV3/MushaV3weekly.tar.gz smiley@server.milkme.co.uk:/home/smiley/backups/
 
 # Sync backup to GDrive
 /home/tim/bin/goLibs/rclone --transfers 8 --retries 99 -c --config /home/tim/.rclone.conf sync /backups/MushaV3/MushaV3weekly.tar.gz  GDrive:backup/weekly
