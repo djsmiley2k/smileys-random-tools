@@ -1,5 +1,5 @@
 #!/bin/bash
 
 echo 'Starting backup'
-/home/tim/bin/goLibs/rclone $1 --transfers 8 --retries 99 --modify-window 5s --drive-upload-cutoff 5M -c --config /home/tim/.rclone.conf sync /backups/MushaV3/daily.0/etc-daily/ GDrive:backup/MushaV3/etc-daily 
+/home/tim/bin/goLibs/rclone $1 --transfers 8 --retries 99 --modify-window 5s --drive-upload-cutoff 5M -c --config /home/tim/.rclone.conf sync /backups/server/daily.0/etc-daily/ GDrive:backup/server/etc-daily
 
