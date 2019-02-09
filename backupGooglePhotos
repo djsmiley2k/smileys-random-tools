@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo 'Starting Google Photos backup'
+rclone $1 --transfers 20 --retries 10 --modify-window 5s --drive-upload-cutoff 5M -c --config /home/tim/.rclone.conf sync GDrive:Google\ Photos/ /backups/googlePhotos/
