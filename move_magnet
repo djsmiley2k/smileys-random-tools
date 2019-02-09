@@ -1,0 +1,20 @@
+#!/bin/bash
+
+## Move torrent to specified location
+
+#/bin/mv "$1" /home/tim/server/torrents/
+
+[[ $1 =~ xt=urn:btih:([^&/]+) ]] || exit
+hashh=${BASH_REMATCH[1]}
+if [[ $1 =~ dn=([^&/]+) ]];then
+  filename=${BASH_REMATCH[1]}
+else
+  filename=$hashh
+fi
+echo "d10:magnet-uri${#1}:${1}e" > "meta-$filename.torrent"
+
+# Now move it to the server
+/usr/bin/scp "meta-$filename.torrent" server1:~/watch/ || echo "Derped on scp" && exit 1
+
+rm "meta-$filename.torrent" || echo "Derped on removing file" && exit 1
+
