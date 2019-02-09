@@ -4,4 +4,4 @@
 
 #/bin/mv "$1" /home/tim/server/torrents/
 
-/usr/bin/scp $1 server1:~/watch/
+/usr/bin/scp "$1" server1:~/watch/
