@@ -2,4 +2,6 @@
 
 ## Move torrent to specified location
 
-/bin/mv "$1" /home/tim/server/torrents/
+#/bin/mv "$1" /home/tim/server/torrents/
+
+/usr/bin/scp $1 server1:~/watch/
