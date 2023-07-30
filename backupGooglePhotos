@@ -1,4 +1,14 @@
 #!/bin/bash
 
-echo 'Starting Google Photos backup'
-rclone $1 --transfers 20 --retries 10 --modify-window 5s --drive-upload-cutoff 5M -c --config /home/tim/.rclone.conf sync GDrive:Google\ Photos/ /backups/googlePhotos/
+cd /home/tim/bin/gphotos-sync/
+source ./bin/activate
+gphotos-sync /backups/googlePhotos/
+deactivate
+exit
+
+## For python upgrades, new venv must be created
+
+
+## rm -rf ~/bin/gphotos-sync-old; mv ~/bin/gphotos-sync ~/bin/gphotos-sync-old; 
+## python3.10 -m venv ~/bin/gphotos-sync ; cd ~/bin/gphotos-sync/; . ~/bin/activate ; pip install gphotos-sync
+
